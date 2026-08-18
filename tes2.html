@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chúc mừng sinh nhật em công chúa của anh ❤️</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.55),transparent 25%),
+    radial-gradient(circle at 80% 75%,rgba(255,255,255,.4),transparent 28%),
+    linear-gradient(135deg,#ff8fbe,#ffb7d7 45%,#c9a7ff);
+  color:#fff;
+  position:relative;
+}
+body::before{
+  content:"";position:fixed;inset:-30%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.18),transparent);
+  animation:shine 7s linear infinite;pointer-events:none;
+}
+@keyframes shine{from{transform:translateX(-35%) rotate(12deg)}to{transform:translateX(35%) rotate(12deg)}}
+
+.bg-heart,.petal,.spark{
+  position:fixed;pointer-events:none;z-index:1;user-select:none;
+}
+.bg-heart{color:#fff;font-size:20px;animation:heartFloat linear forwards;text-shadow:0 0 12px #ff3d91}
+@keyframes heartFloat{
+  0%{transform:translateY(110vh) scale(.4) rotate(0);opacity:0}
+  12%{opacity:.9}
+  100%{transform:translateY(-15vh) scale(1.5) rotate(360deg);opacity:0}
+}
+.petal{animation:petalFall linear forwards;filter:drop-shadow(0 2px 3px rgba(0,0,0,.12))}
+@keyframes petalFall{
+  0%{transform:translateY(-10vh) rotate(0) translateX(0);opacity:0}
+  10%{opacity:1}
+  50%{transform:translateY(50vh) rotate(180deg) translateX(55px)}
+  100%{transform:translateY(115vh) rotate(450deg) translateX(-55px);opacity:.15}
+}
+.spark{width:5px;height:5px;border-radius:50%;background:white;box-shadow:0 0 12px 4px rgba(255,255,255,.8);animation:twinkle 2s ease-in-out infinite}
+@keyframes twinkle{50%{transform:scale(2);opacity:.25}}
+
+.wrapper{
+  position:relative;z-index:5;width:min(92vw,470px);height:94vh;
+  display:flex;align-items:center;justify-content:center;
+}
+.card{
+  width:100%;max-height:92vh;overflow:hidden;
+  padding:20px 18px 24px;border:1px solid rgba(255,255,255,.65);
+  border-radius:30px;background:rgba(255,255,255,.18);
+  backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);
+  box-shadow:0 18px 60px rgba(120,20,80,.25),inset 0 1px rgba(255,255,255,.7);
+  text-align:center;
+}
+.title{
+  font-size:clamp(25px,7vw,37px);line-height:1.15;
+  margin:2px 0 15px;color:#fff;text-shadow:0 3px 15px #d72c76;
+  animation:titleGlow 2s ease-in-out infinite alternate;
+}
+@keyframes titleGlow{to{text-shadow:0 0 25px #fff,0 0 40px #ff4d9a}}
+
+.photo-wrap{
+  width:min(76vw,285px);aspect-ratio:1/1;margin:auto;
+  padding:7px;border-radius:50%;
+  background:linear-gradient(135deg,#fff,#ffd3e7,#fff);
+  box-shadow:0 0 30px rgba(255,255,255,.75),0 0 50px rgba(255,57,139,.35);
+}
+.photo-wrap img{
+  width:100%;height:100%;object-fit:cover;border-radius:50%;
+  display:block;transition:opacity .45s ease,transform .45s ease;
+}
+.photo-wrap img.fade{opacity:0;transform:scale(.94)}
+.dots{display:flex;justify-content:center;gap:7px;margin:11px 0 13px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.45);transition:.3s}
+.dot.active{background:#fff;box-shadow:0 0 10px #fff;transform:scale(1.35)}
+
+.sub{font-size:14px;opacity:.95;margin-bottom:12px;text-shadow:0 1px 5px #a32161}
+.open-btn{
+  border:0;border-radius:999px;padding:13px 24px;font-size:16px;font-weight:700;
+  color:#d82d72;background:#fff;cursor:pointer;
+  box-shadow:0 7px 22px rgba(120,20,80,.22);transition:.25s;
+}
+.open-btn:hover{transform:translateY(-2px) scale(1.03)}
+.open-btn:active{transform:scale(.96)}
+
+/* Modal mật khẩu */
+.modal{
+  position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(65,10,45,.6);backdrop-filter:blur(8px);
+  opacity:0;visibility:hidden;transition:.45s;
+}
+.modal.show{opacity:1;visibility:visible}
+.modal-box{
+  width:min(90vw,320px);padding:25px 22px;
+  border-radius:25px;background:rgba(255,255,255,.95);color:#9d285d;
+  box-shadow:0 20px 70px rgba(0,0,0,.3);transform:translateY(25px) scale(.94);
+  transition:.45s;text-align:center;
+}
+.modal.show .modal-box{transform:none}
+.modal-box h3{font-size:22px;margin-bottom:15px;color:#e52f78}
+.modal-box input{
+  width:100%;padding:12px 15px;border:1px solid #e5a4c7;border-radius:999px;
+  font-size:18px;text-align:center;outline:none;margin-bottom:15px;
+}
+.modal-box .btn-row{display:flex;gap:10px;justify-content:center}
+.modal-box button{
+  border:0;border-radius:999px;padding:10px 20px;font-weight:700;cursor:pointer;
+  background:#e83b81;color:white;transition:.25s;
+}
+.modal-box button.ghost{background:#ccc;color:#333}
+.modal-box .error{color:#d62d6e;font-size:14px;margin-top:8px;display:none}
+
+.letter{
+  position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(65,10,45,.45);backdrop-filter:blur(8px);
+  opacity:0;visibility:hidden;transition:.45s;
+}
+.letter.show{opacity:1;visibility:visible}
+.letter-box{
+  width:min(92vw,450px);max-height:82vh;overflow:auto;padding:27px 22px;
+  border-radius:27px;background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(255,236,246,.95));
+  color:#9d285d;box-shadow:0 20px 80px rgba(0,0,0,.3);transform:translateY(25px) scale(.94);
+  transition:.45s;
+}
+.letter.show .letter-box{transform:none}
+.letter-box h2{font-size:27px;margin-bottom:15px;color:#e52f78}
+.letter-box p{font-size:16px;line-height:1.8;white-space:pre-line}
+.close{margin-top:18px;border:0;background:#e83b81;color:white;border-radius:999px;padding:10px 20px;font-weight:700;cursor:pointer}
+
+canvas{position:fixed;inset:0;z-index:15;pointer-events:none}
+@media(max-height:650px){
+ .card{padding:13px 14px 17px}
+ .photo-wrap{width:min(58vh,230px)}
+ .title{margin-bottom:8px}
+ .sub{margin-bottom:8px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<!-- Nhạc nền (ẩn) -->
+<audio id="bg-music" loop>
+  <source src="c:\Users\Hoang Hung\Downloads\SaveTik.io_7463462629252680978.mp3" type="audio/mpeg">
+  Trình duyệt của em không hỗ trợ âm thanh.
+</audio>
+
+<div class="wrapper">
+  <main class="card">
+    <div class="title">🎂 Chúc mừng sinh nhật<br>em công chúa của anh ❤️</div>
+
+    <div class="photo-wrap">
+      <img id="photo" src="https://i.postimg.cc/v8v2Z1m5/321a29a5-91b2-4a99-8470-16eb68f963c1.jpg" alt="Ảnh của em">
+    </div>
+
+    <div class="dots">
+      <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+
+    <div class="sub">Một món quà nhỏ dành riêng cho em 🌸</div>
+    <button class="open-btn" id="openBtn">💌 Mở thư của anh</button>
+  </main>
+</div>
+
+<!-- Modal mật khẩu -->
+<div class="modal" id="passwordModal">
+  <div class="modal-box">
+    <h3>🔒 Nhập mật khẩu</h3>
+    <input type="password" id="passwordInput" placeholder="Mật khẩu là ngày tháng năm sinh của em..." autocomplete="off">
+    <div class="btn-row">
+      <button class="ghost" id="cancelBtn">Hủy</button>
+      <button id="confirmBtn">Mở thư 💌</button>
+    </div>
+    <p class="error" id="errorMsg">Mật khẩu không đúng, thử lại nhé!</p>
+  </div>
+</div>
+
+<!-- Thư -->
+<div class="letter" id="letter">
+  <div class="letter-box">
+    <h2>💖 Gửi em, công chúa của anh 💖</h2>
+    <p>Chúc em tuổi mới luôn vui vẻ, xinh đẹp, hạnh phúc.
+
+Chúc những điều tốt đẹp nhất sẽ đến với em.
+
+Và cũng cảm ơn em đã xuất hiện trong cuộc đời của anh.
+
+Anh thương em nhiềuuuuu ❤️</p>
+    <button class="close" id="closeBtn">Đóng thư 💕</button>
+  </div>
+</div>
+
+<script>
+// ====== CÀI ĐẶT MẬT KHẨU ======
+const PASSWORD = "19082009"; // 👉 ĐỔI MẬT KHẨU TẠI ĐÂY (ví dụ: "1234", "abc")
+
+// ====== DANH SÁCH ẢNH (đã có sẵn) ======
+const images = [
+  "https://i.postimg.cc/v8v2Z1m5/321a29a5-91b2-4a99-8470-16eb68f963c1.jpg",
+  "https://i.postimg.cc/rsS7jgGD/7045e097-b960-429d-8818-4d3c9d483faf.jpg",
+  "https://i.postimg.cc/4yzjPwv3/33cdfea4-03d5-44f8-9416-b51cfc26a5ce.jpg"
+];
+let index = 0;
+const photo = document.getElementById("photo");
+const dots = [...document.querySelectorAll(".dot")];
+
+setInterval(() => {
+  photo.classList.add("fade");
+  setTimeout(() => {
+    index = (index + 1) % images.length;
+    photo.src = images[index];
+    dots.forEach((d, i) => d.classList.toggle("active", i === index));
+    photo.classList.remove("fade");
+  }, 450);
+}, 4000);
+
+// ====== HIỆU ỨNG TRÁI TIM, CÁNH HOA ======
+function spawnHeart() {
+  const e = document.createElement("div");
+  e.className = "bg-heart";
+  e.textContent = Math.random() > .5 ? "❤" : "💗";
+  e.style.left = Math.random() * 100 + "vw";
+  e.style.fontSize = (12 + Math.random() * 25) + "px";
+  e.style.animationDuration = (6 + Math.random() * 6) + "s";
+  document.body.appendChild(e);
+  setTimeout(() => e.remove(), 13000);
+}
+function spawnPetal() {
+  const e = document.createElement("div");
+  e.className = "petal";
+  e.textContent = ["🌸", "🌷", "🌺"][Math.floor(Math.random() * 3)];
+  e.style.left = Math.random() * 100 + "vw";
+  e.style.fontSize = (13 + Math.random() * 15) + "px";
+  e.style.animationDuration = (6 + Math.random() * 7) + "s";
+  document.body.appendChild(e);
+  setTimeout(() => e.remove(), 14000);
+}
+function spawnSpark() {
+  const e = document.createElement("div");
+  e.className = "spark";
+  e.style.left = Math.random() * 100 + "vw";
+  e.style.top = Math.random() * 100 + "vh";
+  e.style.animationDelay = Math.random() * 2 + "s";
+  document.body.appendChild(e);
+}
+setInterval(spawnHeart, 420);
+setInterval(spawnPetal, 520);
+for (let i = 0; i < 28; i++) spawnSpark();
+
+// ====== MODAL MẬT KHẨU ======
+const passwordModal = document.getElementById("passwordModal");
+const passwordInput = document.getElementById("passwordInput");
+const errorMsg = document.getElementById("errorMsg");
+const letter = document.getElementById("letter");
+const music = document.getElementById("bg-music");
+
+document.getElementById("openBtn").addEventListener("click", () => {
+  passwordModal.classList.add("show");
+  passwordInput.value = "";
+  errorMsg.style.display = "none";
+  passwordInput.focus();
+});
+
+document.getElementById("cancelBtn").addEventListener("click", () => {
+  passwordModal.classList.remove("show");
+});
+
+document.getElementById("confirmBtn").addEventListener("click", () => {
+  const val = passwordInput.value.trim();
+  if (val === PASSWORD) {
+    // Đúng mật khẩu
+    passwordModal.classList.remove("show");
+    letter.classList.add("show");
+    burstHearts();
+    launchFireworks();
+    // Phát nhạc
+    music.play().catch(err => console.log("Chưa thể phát nhạc:", err));
+  } else {
+    // Sai mật khẩu
+    errorMsg.style.display = "block";
+    passwordInput.select();
+  }
+});
+
+// Cho phép nhấn Enter trong ô mật khẩu
+passwordInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    document.getElementById("confirmBtn").click();
+  }
+});
+
+// ====== ĐÓNG THƯ ======
+document.getElementById("closeBtn").addEventListener("click", () => {
+  letter.classList.remove("show");
+  // Có thể dừng nhạc nếu muốn (bỏ dòng dưới nếu muốn nhạc tiếp tục)
+  // music.pause();
+});
+
+// Đóng thư khi click ra ngoài
+letter.addEventListener("click", (e) => {
+  if (e.target === letter) letter.classList.remove("show");
+});
+
+// ====== BURST TRÁI TIM ======
+function burstHearts() {
+  for (let i = 0; i < 28; i++) setTimeout(spawnHeart, i * 35);
+}
+
+// ====== PHÁO HOA CANVAS ======
+const canvas = document.getElementById("fireworks"), ctx = canvas.getContext("2d");
+let W, H, particles = [];
+function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight }
+resize();
+addEventListener("resize", resize);
+
+function launchFireworks() {
+  for (let n = 0; n < 7; n++) {
+    setTimeout(() => {
+      const x = W * .15 + Math.random() * W * .7, y = H * .12 + Math.random() * H * .42;
+      for (let i = 0; i < 55; i++) {
+        const a = Math.PI * 2 * i / 55, s = 2 + Math.random() * 4;
+        particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 1 });
+      }
+    }, n * 350);
+  }
+}
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  particles = particles.filter(p => p.life > 0);
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += .035;
+    p.life -= .018;
+    ctx.globalAlpha = Math.max(0, p.life);
+    ctx.fillStyle = "white";
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = "#ff5a9d";
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
